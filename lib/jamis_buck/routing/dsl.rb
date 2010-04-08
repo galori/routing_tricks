@@ -12,7 +12,13 @@ module Routing
       route = params.delete(:destination)
       status = params.delete(:status) || :moved_permanently
 
-      redirect_to send(:"#{route}_url", params), :status => status
+      symbol_params = convert_string_hash_to_symbols(params)
+
+      redirect_to send(:"#{route}_url", symbol_params), :status => status
+    end
+
+    def convert_string_hash_to_symbols(hash)
+      hash.inject({}) {|acc,(k,v)| acc[k.to_sym] = v; acc}
     end
 
   end
