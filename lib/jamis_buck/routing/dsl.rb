@@ -10,8 +10,9 @@ module Routing
       params.delete(:controller)
       params.delete(:action)
       route = params.delete(:destination)
+      status = params.delete(:status) || :moved_permanently
 
-      redirect_to send(:"#{route}_url", params)
+      redirect_to send(:"#{route}_url", params), :status => status
     end
 
   end
